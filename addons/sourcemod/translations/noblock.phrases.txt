@@ -1,0 +1,20 @@
+"Phrases"
+{
+	"now solid"
+	{
+    "#format"	"{1:f}"
+    "en"    "Blocking has been Enabled for {1} seconds."
+  }
+  "noblock enabled"
+  {
+    "en"    "Noblock is now active. You can pass through all players."
+  }
+  "block for solid"
+  {
+    "en"    "Type !block to temporarily become solid."
+  }
+  "noblock disabled"
+  {
+    "en"    "Effective immediately, noblock has been disabled."
+  }
+}
