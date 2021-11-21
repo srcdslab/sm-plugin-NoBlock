@@ -37,8 +37,8 @@ public void OnPluginStart()
 	
 	char modname[50];
 	GetGameFolderName(modname, sizeof(modname));
-	if(!StrEqual(modname,"cstrike",false))
-		SetFailState("Sorry! This plugin only works on Counter-Strike: Source.");
+	if(!StrEqual(modname,"cstrike",false) && !StrEqual(modname,"csgo",false))
+		SetFailState("Sorry! This plugin only works on Counter-Strike: Source and Counter-Strike: Global Offensive.");
 
 	g_CollisionOffset = FindSendPropInfo("CBaseEntity", "m_CollisionGroup");   
 
