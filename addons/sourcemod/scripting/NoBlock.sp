@@ -42,19 +42,21 @@ public void OnPluginStart()
 
 	g_CollisionOffset = FindSendPropInfo("CBaseEntity", "m_CollisionGroup");   
 
-	HookEvent("player_spawn", Event_PlayerSpawn);
-	
+	HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
+
 	RegConsoleCmd("sm_block", Command_NoBlock);
-	
+
 	sm_grenplayer_noblock_version = CreateConVar("sm_grenplayer_noblock_version", PLUGIN_VERSION, "Noblock Version; not changeable", FCVAR_SPONLY|FCVAR_REPLICATED|FCVAR_NOTIFY);
 	sm_noblock_grenades = CreateConVar("sm_noblock_grenades", "1", "Enables/Disables blocking of grenades; 0 - Disabled, 1 - Enabled");
 	sm_noblock_players = CreateConVar("sm_noblock_players", "1", "Removes player vs. player collisions");
 	sm_noblock_allow_block = CreateConVar("sm_noblock_allow_block", "1", "Allow players to use say !block; 0 - Disabled, 1 - Enabled");
 	sm_noblock_allow_block_time = CreateConVar("sm_noblock_allow_block_time", "20.0", "Time limit to say !block command", 0, true, 0.0, true, 600.0);
 	sm_noblock_notify = CreateConVar("sm_noblock_notify", "1", "Enables/Disables chat messages; 0 - Disabled, 1 - Enabled");
-	
+
 	HookConVarChange(sm_noblock_players, OnConVarChange);
+
 	SetConVarString(sm_grenplayer_noblock_version, PLUGIN_VERSION);
+
 	AutoExecConfig(true);
 }
 
@@ -76,7 +78,7 @@ public void OnConVarChange(Handle hCvar, const char[] oldValue, const char[] new
 	}
 }
 
-public void Event_PlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
+public Action Event_PlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
 {
 	int userid = GetEventInt(event, "userid");
 	int client = GetClientOfUserId(userid);
@@ -85,6 +87,7 @@ public void Event_PlayerSpawn(Handle event, const char[] name, bool dontBroadcas
 	{
 		EnableNoBlock(client);
 	}
+	return Plugin_Continue;
 }
 
 public Action Command_NoBlock(int client, int args)
@@ -127,7 +130,7 @@ public void EnableNoBlock(int client)
 	if (GetConVarInt(sm_noblock_notify) == 1)
 		CPrintToChat(client, MESSAGE, "noblock enabled");
 
-	SetEntData(client, g_CollisionOffset, 2, 4, true);
+	SetEntData(client, g_CollisionOffset, 2, 1, true);
 
 	if (GetConVarInt(sm_noblock_allow_block) == 1 && (GetConVarInt(sm_noblock_notify) == 1))
 		CPrintToChat(client, MESSAGE, "block for solid");
@@ -137,17 +140,7 @@ public void OnEntityCreated(int entity, const char[] classname)
 {
 	if (GetConVarInt(sm_noblock_grenades) == 1)
 	{
-		if (StrEqual(classname, "hegrenade_projectile"))
-		{
-			SetEntData(entity, g_CollisionOffset, 2, 1, true);
-		}
-		
-		if (StrEqual(classname, "flashbang_projectile"))
-		{
-			SetEntData(entity, g_CollisionOffset, 2, 1, true);
-		}
-		
-		if (StrEqual(classname, "smokegrenade_projectile"))
+		if (StrContains(classname, "_projectile") != -1)
 		{
 			SetEntData(entity, g_CollisionOffset, 2, 1, true);
 		}
