@@ -2,7 +2,7 @@
 {
 	"now solid"
 	{
-    "#format"	"{1:f}"
+    "#format"	"{1:0.f}"
     "en"    "Blocking has been Enabled for {1} seconds."
   }
   "noblock enabled"
