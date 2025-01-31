@@ -25,7 +25,7 @@ public Plugin myinfo =
 	name = "Noblock players and Nades",
 	author = "Originally by Tony G., Fixed by Rogue, Updated by maxime1907, .Rushaway",
 	description = "Manipulates players and grenades so they can't block each other",
-	version = "2.2.1",
+	version = "2.2.2",
 	url = "http://www.sourcemod.net/"
 };
 
@@ -79,7 +79,8 @@ public Action Event_PlayerSpawn(Handle event, const char[] name, bool dontBroadc
 	{
 		int userid = GetEventInt(event, "userid");
 		int client = GetClientOfUserId(userid);
-		EnableNoBlock(client);
+		if (IsClientInGame(client))
+			EnableNoBlock(client);
 	}
 	return Plugin_Continue;
 }
