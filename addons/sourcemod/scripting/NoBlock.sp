@@ -43,11 +43,11 @@ public void OnPluginStart()
 
 	RegConsoleCmd("sm_block", Command_NoBlock);
 
-	g_cvGrenades = CreateConVar("sm_noblock_grenades", "1", "Enables/Disables blocking of grenades; 0 - Disabled, 1 - Enabled", _, true, 0.0, true, 1.0);
-	g_cvPlayers = CreateConVar("sm_noblock_players", "1", "Removes player vs. player collisions", _, true, 0.0, true, 1.0);
-	g_cvAllowBlock = CreateConVar("sm_noblock_allow_block", "1", "Allow players to use say !block; 0 - Disabled, 1 - Enabled", _, true, 0.0, true, 1.0);
-	g_cvAllowBlockTime = CreateConVar("sm_noblock_allow_block_time", "20.0", "Time limit to say !block command", 0, true, 0.0, true, 600.0);
-	g_cvNotify = CreateConVar("sm_noblock_notify", "1", "Enables/Disables chat messages; 0 - Disabled, 1 - Enabled", _, true, 0.0, true, 1.0);
+	g_cvGrenades = CreateConVar("sm_noblock_grenades", "1", "Whether to use noblock on grenade projectiles", _, true, 0.0, true, 1.0);
+	g_cvPlayers = CreateConVar("sm_noblock_players", "1", "Whether to set debris collision on every player", _, true, 0.0, true, 1.0);
+	g_cvAllowBlock = CreateConVar("sm_noblock_allow_block", "1", "Whether to allow players to use !block command", _, true, 0.0, true, 1.0);
+	g_cvAllowBlockTime = CreateConVar("sm_noblock_allow_block_time", "20.0", "Time limit for !block command", 0, true, 0.0, true, 600.0);
+	g_cvNotify = CreateConVar("sm_noblock_notify", "1", "Whether to display plugin messages in chat", _, true, 0.0, true, 1.0);
 
 	g_cvPlayers.AddChangeHook(OnConVarChange);
 
