@@ -83,16 +83,16 @@ public Action Command_NoBlock(int client, int args)
 {
 	if (g_cvPlayers.BoolValue && g_cvAllowBlock.BoolValue)
 	{
-		float Time;
-		char nbBuffer[128] = "";
-		Time = g_cvAllowBlockTime.FloatValue;
-
+		float Time = g_cvAllowBlockTime.FloatValue;
 		CreateTimer(Time, Timer_UnBlockPlayer, client);
-		SetGlobalTransTarget(client);
-		Format(nbBuffer, sizeof (nbBuffer), "%t", "now solid", client, Time);
 
 		if (g_cvNotify.BoolValue)
+		{
+			char nbBuffer[128] = "";
+			SetGlobalTransTarget(client);
+			Format(nbBuffer, sizeof (nbBuffer), "%t", "now solid", client, Time);
 			CPrintToChat(client, MESSAGE, "now solid", Time);
+		}
 
 		EnableBlock(client);
 	}
@@ -115,10 +115,11 @@ public void EnableBlock(int client)
 
 public void EnableNoBlock(int client)
 {
-	SetGlobalTransTarget(client);
-
 	if (g_cvNotify.BoolValue)
+	{
+		SetGlobalTransTarget(client);
 		CPrintToChat(client, MESSAGE, "noblock enabled");
+	}
 
 	SetEntData(client, g_CollisionOffset, 2, 1, true);
 
