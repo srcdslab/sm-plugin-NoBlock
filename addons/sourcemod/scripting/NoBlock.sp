@@ -1,16 +1,9 @@
+#pragma newdecls required
 #pragma semicolon 1
 
-// SetEntData(client, g_offsCollisionGroup, 5, 4, true); // CAN NOT PASS THRU ie: Players can jump on each other
-// SetEntData(client, g_offsCollisionGroup, 2, 4, true); // Noblock active ie: Players can walk thru each other
-
-#include <sourcemod>
 #include <multicolors>
-#include <sdktools>
-#include <sdkhooks>
 
-#pragma newdecls required
-
-#define MESSAGE 		"{green}[NoBlock] {default}%t"
+#define MESSAGE "{green}[NoBlock] {default}%t"
 
 int g_CollisionOffset;
 
