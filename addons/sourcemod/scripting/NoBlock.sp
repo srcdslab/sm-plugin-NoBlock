@@ -72,6 +72,9 @@ public void Event_PlayerSpawn(Event event, const char[] name, bool dontBroadcast
 
 public Action Command_NoBlock(int client, int args)
 {
+	if (client <= 0 || client > MaxClients || !IsClientInGame(client))
+		return Plugin_Handled;
+
 	if (g_cvPlayers.BoolValue && g_cvAllowBlock.BoolValue)
 	{
 		float Time = g_cvAllowBlockTime.FloatValue;
