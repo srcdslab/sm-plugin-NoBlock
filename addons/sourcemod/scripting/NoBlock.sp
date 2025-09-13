@@ -60,7 +60,7 @@ public void OnConVarChange(Handle hCvar, const char[] oldValue, const char[] new
 	}
 }
 
-public Action Event_PlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
+public void Event_PlayerSpawn(Event event, const char[] name, bool dontBroadcast)
 {
 	if (g_cvPlayers.BoolValue)
 	{
@@ -68,7 +68,6 @@ public Action Event_PlayerSpawn(Handle event, const char[] name, bool dontBroadc
 		if (IsClientInGame(client))
 			EnableNoBlock(client);
 	}
-	return Plugin_Continue;
 }
 
 public Action Command_NoBlock(int client, int args)
@@ -76,7 +75,7 @@ public Action Command_NoBlock(int client, int args)
 	if (g_cvPlayers.BoolValue && g_cvAllowBlock.BoolValue)
 	{
 		float Time = g_cvAllowBlockTime.FloatValue;
-		CreateTimer(Time, Timer_UnBlockPlayer, client);
+		CreateTimer(Time, Timer_UnBlockPlayer, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
 
 		if (g_cvNotify.BoolValue)
 		{
@@ -89,9 +88,11 @@ public Action Command_NoBlock(int client, int args)
 	return Plugin_Handled;
 }
 
-public Action Timer_UnBlockPlayer(Handle timer, any client)
+public Action Timer_UnBlockPlayer(Handle timer, int userid)
 {
-	if (!IsClientInGame(client) && !IsPlayerAlive(client))
+	int client = GetClientOfUserId(userid);
+
+	if (!client || !IsClientInGame(client) || !IsPlayerAlive(client))
 		return Plugin_Continue;
 
 	EnableNoBlock(client);
