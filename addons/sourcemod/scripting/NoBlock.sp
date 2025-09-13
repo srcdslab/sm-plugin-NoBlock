@@ -71,8 +71,7 @@ public Action Event_PlayerSpawn(Handle event, const char[] name, bool dontBroadc
 {
 	if (g_cvPlayers.BoolValue)
 	{
-		int userid = GetEventInt(event, "userid");
-		int client = GetClientOfUserId(userid);
+		int client = GetClientOfUserId(GetEventInt(event, "userid"));
 		if (IsClientInGame(client))
 			EnableNoBlock(client);
 	}
@@ -88,9 +87,7 @@ public Action Command_NoBlock(int client, int args)
 
 		if (g_cvNotify.BoolValue)
 		{
-			char nbBuffer[128] = "";
 			SetGlobalTransTarget(client);
-			Format(nbBuffer, sizeof (nbBuffer), "%t", "now solid", client, Time);
 			CPrintToChat(client, MESSAGE, "now solid", Time);
 		}
 
