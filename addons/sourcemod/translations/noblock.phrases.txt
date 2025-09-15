@@ -4,17 +4,37 @@
     {
         "#format"   "{1:0.f}"
         "en"        "Blocking has been Enabled for {1} seconds."
+        "zho"       "已停用非實心模式{1}秒鐘。"
+        "chi"       "已停用非实心模式{1}秒钟。"
+        "es"        "El bloqueo ha sido habilitado durante {1} segundos."
+        "fr"        "Le blocage a été activé pendant {1} secondes."
+        "ru"        "Блокировка включена на {1} секунд."
     }
     "noblock enabled"
     {
         "en"        "Noblock is now active. You can pass through all players."
+        "zho"       "已啓用非實心模式。你現在可以穿過其他玩家。"
+        "chi"       "已启用非实心模式。你现在可以穿过其他玩家。"
+        "es"        "Noblock ahora está activo. Puedes pasar a través de todos los jugadores."
+        "fr"        "Noblock est maintenant actif. Vous pouvez traverser tous les joueurs."
+        "ru"        "Безблокировка теперь активна. Вы можете проходить сквозь всех игроков."
     }
     "noblock disabled"
     {
         "en"        "Effective immediately, noblock has been disabled."
+        "zho"       "已停用非實心模式。"
+        "chi"       "已停用非实心模式。"
+        "es"        "Con efecto inmediato, noblock ha sido desactivado."
+        "fr"        "Avec effet immédiat, noblock a été désactivé."
+        "ru"        "С немедленным вступлением в силу, безблокировка была отключена."
     }
     "block for solid"
     {
         "en"        "Type !block to temporarily become solid."
+        "zho"       "輸入 !block 來暫時停用非實心模式。"
+        "chi"       "输入 !block 来暂时停用非实心模式。"
+        "es"        "Escribe !block para volverte sólido temporalmente."
+        "fr"        "Tapez !block pour devenir temporairement solide."
+        "ru"        "Введите !block, чтобы временно стать твердым."
     }
 }
