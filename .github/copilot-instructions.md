@@ -15,19 +15,19 @@ This repository contains the **NoBlock** SourceMod plugin for Counter-Strike: So
 
 ### Core Technologies
 - **Language**: SourcePawn (.sp files)
-- **Platform**: SourceMod 1.11+ (dependency defined in sourceknight.yaml)
-- **Build System**: SourceKnight (modern SourcePawn build tool)
+- **Platform**: SourceMod 1.12.x
+- **Build System**: Native GitHub Actions using rumblefrog/setup-sp (spcomp)
 - **Game Compatibility**: Counter-Strike: Source and Counter-Strike: Global Offensive only
 
 ### Dependencies
-- **SourceMod**: 1.11.0-git6934 (defined in sourceknight.yaml)
+- **SourceMod**: 1.12.x (installed in CI via rumblefrog/setup-sp)
 - **MultiColors**: For colored chat messages (GitHub: srcdslab/sm-plugin-MultiColors)
 - **Standard Includes**: sourcemod, sdktools, sdkhooks
 
 ### Build Process
 ```bash
-# SourceKnight handles compilation automatically
-# Build configuration in sourceknight.yaml
+# GitHub Actions compiles the plugin directly with spcomp
+# Build configuration in .github/workflows/ci.yml
 # CI/CD via GitHub Actions (.github/workflows/ci.yml)
 ```
 
@@ -89,7 +89,7 @@ This repository contains the **NoBlock** SourceMod plugin for Counter-Strike: So
 
 ### Build Validation
 ```bash
-# SourceKnight automatically validates:
+# GitHub Actions CI automatically validates:
 # - Syntax errors
 # - Include dependencies
 # - Compilation success
@@ -138,8 +138,8 @@ The plugin manipulates the `m_CollisionGroup` property of entities:
 ## CI/CD & Release Process
 
 ### GitHub Actions Workflow
-- **Trigger**: Push to main/master, PRs, tags
-- **Build**: SourceKnight compilation via maxime1907/action-sourceknight
+- **Trigger**: Push, pull requests, workflow_dispatch
+- **Build**: Native compilation via rumblefrog/setup-sp (spcomp)
 - **Package**: Creates deployment-ready structure
 - **Release**: Automatic releases on tags and latest builds
 
@@ -164,7 +164,7 @@ The plugin manipulates the `m_CollisionGroup` property of entities:
 - Consider impact on both players and grenades
 
 ### Updating Dependencies
-- Modify `sourceknight.yaml` for SourceMod/MultiColors versions
+- Modify `.github/workflows/ci.yml` for SourceMod/MultiColors versions
 - Ensure compatibility with minimum SourceMod version
 - Test build process after dependency changes
 
