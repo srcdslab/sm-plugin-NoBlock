@@ -18,7 +18,7 @@ public Plugin myinfo =
 	name = "Noblock players and Nades",
 	author = "Originally by Tony G., Fixed by Rogue, Updated by maxime1907, .Rushaway",
 	description = "Manipulates players and grenades so they can't block each other",
-	version = "2.2.5",
+	version = "2.2.6",
 	url = "http://www.sourcemod.net/"
 };
 
@@ -47,7 +47,7 @@ public void OnPluginStart()
 	AutoExecConfig(true);
 }
 
-public void OnConVarChange(Handle hCvar, const char[] oldValue, const char[] newValue)
+public void OnConVarChange(ConVar hCvar, const char[] oldValue, const char[] newValue)
 {
 	if (g_cvPlayers.BoolValue)
 		UnblockClientAll();
@@ -64,7 +64,7 @@ public void Event_PlayerSpawn(Event event, const char[] name, bool dontBroadcast
 {
 	if (g_cvPlayers.BoolValue)
 	{
-		int client = GetClientOfUserId(GetEventInt(event, "userid"));
+		int client = GetClientOfUserId(event.GetInt("userid"));
 		if (IsClientInGame(client))
 			EnableNoBlock(client);
 	}
