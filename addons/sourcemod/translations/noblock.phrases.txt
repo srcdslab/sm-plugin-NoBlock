@@ -3,12 +3,14 @@
     "now solid"
     {
         "#format"   "{1:0.f}"
-        "en"        "Blocking has been Enabled for {1} seconds."
+        "en"        "Blocking has been enabled for {1} seconds."
         "zho"       "已停用非實心模式{1}秒鐘。"
         "chi"       "已停用非实心模式{1}秒钟。"
         "es"        "El bloqueo ha sido habilitado durante {1} segundos."
         "fr"        "Le blocage a été activé pendant {1} secondes."
         "ru"        "Блокировка включена на {1} секунд."
+        "de"        "Blocken wurde für {1} Sekunden aktiviert."
+        "pt"        "O bloqueio foi ativado por {1} segundos."
     }
     "noblock enabled"
     {
@@ -17,7 +19,9 @@
         "chi"       "已启用非实心模式。你现在可以穿过其他玩家。"
         "es"        "Noblock ahora está activo. Puedes pasar a través de todos los jugadores."
         "fr"        "Noblock est maintenant actif. Vous pouvez traverser tous les joueurs."
-        "ru"        "Безблокировка теперь активна. Вы можете проходить сквозь всех игроков."
+        "ru"        "Noblock теперь активен. Вы можете проходить сквозь всех игроков."
+        "de"        "Noblock ist jetzt aktiv. Du kannst durch alle Spieler hindurchgehen."
+        "pt"        "O noblock está ativo. Você pode atravessar todos os jogadores."
     }
     "noblock disabled"
     {
@@ -26,7 +30,9 @@
         "chi"       "已停用非实心模式。"
         "es"        "Con efecto inmediato, noblock ha sido desactivado."
         "fr"        "Avec effet immédiat, noblock a été désactivé."
-        "ru"        "С немедленным вступлением в силу, безблокировка была отключена."
+        "ru"        "Noblock отключён с этого момента."
+        "de"        "Noblock ist ab sofort deaktiviert."
+        "pt"        "O noblock foi desativado com efeito imediato."
     }
     "block for solid"
     {
@@ -36,5 +42,7 @@
         "es"        "Escribe !block para volverte sólido temporalmente."
         "fr"        "Tapez !block pour devenir temporairement solide."
         "ru"        "Введите !block, чтобы временно стать твердым."
+        "de"        "Tippe !block, um vorübergehend wieder zu blocken."
+        "pt"        "Digite !block para ficar sólido temporariamente."
     }
 }
