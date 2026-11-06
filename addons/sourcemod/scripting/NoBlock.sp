@@ -1,9 +1,13 @@
 #pragma newdecls required
 #pragma semicolon 1
 
+#include <sdkhooks>
 #include <multicolors>
 
 #define MESSAGE "{green}[NoBlock] {default}%t"
+
+#define COLLISION_NOBLOCK 2
+#define COLLISION_SOLID 5
 
 int g_CollisionOffset;
 
@@ -12,6 +16,8 @@ ConVar g_cvPlayers;
 ConVar g_cvAllowBlock;
 ConVar g_cvAllowBlockTime;
 ConVar g_cvNotify;
+
+Handle g_hUnblockTimer[MAXPLAYERS + 1];
 
 public Plugin myinfo =
 {
@@ -31,6 +37,8 @@ public void OnPluginStart()
 		SetFailState("Sorry! This plugin only works on Counter-Strike: Source and Counter-Strike: Global Offensive.");
 
 	g_CollisionOffset = FindSendPropInfo("CBaseEntity", "m_CollisionGroup");
+	if (g_CollisionOffset == -1)
+		SetFailState("Could not find CBaseEntity::m_CollisionGroup.");
 
 	HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
 
@@ -39,16 +47,32 @@ public void OnPluginStart()
 	g_cvGrenades = CreateConVar("sm_noblock_grenades", "1", "Whether to use noblock on grenade projectiles", _, true, 0.0, true, 1.0);
 	g_cvPlayers = CreateConVar("sm_noblock_players", "1", "Whether to set debris collision on every player", _, true, 0.0, true, 1.0);
 	g_cvAllowBlock = CreateConVar("sm_noblock_allow_block", "1", "Whether to allow players to use !block command", _, true, 0.0, true, 1.0);
-	g_cvAllowBlockTime = CreateConVar("sm_noblock_allow_block_time", "20.0", "Time limit for !block command", 0, true, 0.0, true, 600.0);
+	g_cvAllowBlockTime = CreateConVar("sm_noblock_allow_block_time", "20.0", "Time limit for !block command", 0, true, 1.0, true, 600.0);
 	g_cvNotify = CreateConVar("sm_noblock_notify", "1", "Whether to display plugin messages in chat", _, true, 0.0, true, 1.0);
 
 	g_cvPlayers.AddChangeHook(OnConVarChange);
 
 	AutoExecConfig(true);
+
+	if (g_cvPlayers.BoolValue)
+		UnblockClientAll();
+}
+
+public void OnPluginEnd()
+{
+	BlockClientAll();
+}
+
+public void OnClientDisconnect(int client)
+{
+	delete g_hUnblockTimer[client];
 }
 
 public void OnConVarChange(ConVar hCvar, const char[] oldValue, const char[] newValue)
 {
+	if (StringToInt(oldValue) == StringToInt(newValue))
+		return;
+
 	if (g_cvPlayers.BoolValue)
 		UnblockClientAll();
 	else
@@ -65,20 +89,21 @@ public void Event_PlayerSpawn(Event event, const char[] name, bool dontBroadcast
 	if (g_cvPlayers.BoolValue)
 	{
 		int client = GetClientOfUserId(event.GetInt("userid"));
-		if (client > 0 && IsClientInGame(client))
+		if (client > 0 && IsClientInGame(client) && GetClientTeam(client) > 1)
 			EnableNoBlock(client);
 	}
 }
 
 public Action Command_NoBlock(int client, int args)
 {
-	if (client <= 0 || client > MaxClients || !IsClientInGame(client))
+	if (client <= 0 || client > MaxClients || !IsClientInGame(client) || !IsPlayerAlive(client))
 		return Plugin_Handled;
 
 	if (g_cvPlayers.BoolValue && g_cvAllowBlock.BoolValue)
 	{
 		float Time = g_cvAllowBlockTime.FloatValue;
-		CreateTimer(Time, Timer_UnBlockPlayer, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
+		delete g_hUnblockTimer[client];
+		g_hUnblockTimer[client] = CreateTimer(Time, Timer_UnBlockPlayer, GetClientUserId(client));
 
 		if (g_cvNotify.BoolValue)
 		{
@@ -95,27 +120,39 @@ public Action Timer_UnBlockPlayer(Handle timer, int userid)
 {
 	int client = GetClientOfUserId(userid);
 
-	if (!client || !IsClientInGame(client) || !IsPlayerAlive(client))
-		return Plugin_Continue;
+	if (!client)
+		return Plugin_Stop;
+
+	g_hUnblockTimer[client] = null;
+
+	if (!IsClientInGame(client) || !IsPlayerAlive(client) || !g_cvPlayers.BoolValue)
+		return Plugin_Stop;
 
 	EnableNoBlock(client);
-	return Plugin_Continue;
+	return Plugin_Stop;
+}
+
+public void SetCollisionGroup(int entity, int group)
+{
+	SetEntData(entity, g_CollisionOffset, group, 1, true);
 }
 
 public void EnableBlock(int client)
 {
-	SetEntData(client, g_CollisionOffset, 5, 4, true);
+	SetCollisionGroup(client, COLLISION_SOLID);
 }
 
 public void EnableNoBlock(int client)
 {
+	delete g_hUnblockTimer[client];
+
 	if (g_cvNotify.BoolValue)
 	{
 		SetGlobalTransTarget(client);
 		CPrintToChat(client, MESSAGE, "noblock enabled");
 	}
 
-	SetEntData(client, g_CollisionOffset, 2, 1, true);
+	SetCollisionGroup(client, COLLISION_NOBLOCK);
 
 	if (g_cvAllowBlock.BoolValue && g_cvNotify.BoolValue)
 		CPrintToChat(client, MESSAGE, "block for solid");
@@ -126,7 +163,7 @@ public void OnEntityCreated(int entity, const char[] classname)
 	if (g_cvGrenades.BoolValue)
 	{
 		if (StrContains(classname, "_projectile") != -1)
-			SetEntData(entity, g_CollisionOffset, 2, 1, true);
+			SetCollisionGroup(entity, COLLISION_NOBLOCK);
 	}
 }
 
