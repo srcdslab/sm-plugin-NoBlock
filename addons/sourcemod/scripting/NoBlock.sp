@@ -24,7 +24,7 @@ public Plugin myinfo =
 	name = "Noblock players and Nades",
 	author = "Originally by Tony G., Fixed by Rogue, Updated by maxime1907, .Rushaway",
 	description = "Manipulates players and grenades so they can't block each other",
-	version = "2.2.8",
+	version = "2.2.9",
 	url = "http://www.sourcemod.net/"
 };
 
