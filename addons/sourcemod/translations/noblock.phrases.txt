@@ -11,6 +11,11 @@
         "ru"        "Блокировка включена на {1} секунд."
         "de"        "Blocken wurde für {1} Sekunden aktiviert."
         "pt"        "O bloqueio foi ativado por {1} segundos."
+        "pl"        "Blokowanie zostało włączone na {1} sek."
+        "tr"        "Engelleme {1} saniye boyunca etkinleştirildi."
+        "it"        "Il blocco è stato attivato per {1} secondi."
+        "ua"        "Блокування увімкнено на {1} секунд."
+        "cze"       "Blokování bylo zapnuto na {1} sekund."
     }
     "noblock enabled"
     {
@@ -22,6 +27,11 @@
         "ru"        "Noblock теперь активен. Вы можете проходить сквозь всех игроков."
         "de"        "Noblock ist jetzt aktiv. Du kannst durch alle Spieler hindurchgehen."
         "pt"        "O noblock está ativo. Você pode atravessar todos os jogadores."
+        "pl"        "Noblock jest teraz aktywny. Możesz przechodzić przez wszystkich graczy."
+        "tr"        "Noblock artık aktif. Tüm oyuncuların içinden geçebilirsin."
+        "it"        "Noblock è ora attivo. Puoi attraversare tutti i giocatori."
+        "ua"        "Noblock тепер активний. Ви можете проходити крізь усіх гравців."
+        "cze"       "Noblock je nyní aktivní. Můžeš procházet skrz všechny hráče."
     }
     "noblock disabled"
     {
@@ -33,6 +43,11 @@
         "ru"        "Noblock отключён с этого момента."
         "de"        "Noblock ist ab sofort deaktiviert."
         "pt"        "O noblock foi desativado com efeito imediato."
+        "pl"        "Ze skutkiem natychmiastowym noblock został wyłączony."
+        "tr"        "Noblock derhal devre dışı bırakıldı."
+        "it"        "Con effetto immediato, noblock è stato disattivato."
+        "ua"        "З негайним набуттям чинності noblock вимкнено."
+        "cze"       "S okamžitou platností byl noblock vypnut."
     }
     "block for solid"
     {
@@ -44,5 +59,10 @@
         "ru"        "Введите !block, чтобы временно стать твердым."
         "de"        "Tippe !block, um vorübergehend wieder zu blocken."
         "pt"        "Digite !block para ficar sólido temporariamente."
+        "pl"        "Wpisz !block, aby tymczasowo stać się solidnym."
+        "tr"        "Geçici olarak katı olmak için !block yaz."
+        "it"        "Digita !block per diventare temporaneamente solido."
+        "ua"        "Введіть !block, щоб тимчасово стати твердим."
+        "cze"       "Napiš !block, abys se dočasně stal pevným."
     }
 }
